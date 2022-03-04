@@ -1,24 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
+import logo from './assets/logo.svg';
 import './App.css';
+import { useState } from 'react';
+import Title from './components/Title';
+import Modal from './components/Modal';
 
-function App() {
+const App = () => {
+  const [showModal, setShowModal] = useState(true);
+  const [name, setName] = useState('Mario');
+  const [showEvents, setShowEvents] = useState(true);
+  const [events, setEvents] = useState([
+    { title: "Mario's birthday bash", id: 1 },
+    { title: "Bowser's live stream", id: 2 },
+    { title: "Race on moo moo farm", id: 3 },
+  ]);
+
+  const handleClick = () => {
+    setName('Luigi');
+  }
+
+  const deleteEvent = (id: number) => {
+    setEvents((prevEvents) => {
+      return prevEvents.filter((event) => {
+        return id !== event.id
+      });
+    });
+  }
+
+  const handleClose = () => {
+    setShowModal(false);
+  }
+
+  const subtitle = 'All the latest events in Marioland';
+  const anotherSub = 'Another subtitle';
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Title title='Events in Your Area' subtitle={subtitle} />
+      <Title title='Another title' subtitle={anotherSub} />
+      <h1>My name is {name}</h1>
+      <button onClick={handleClick}>Change Name</button>
+
+      {showEvents && (
+        <div>
+          <button onClick={() => setShowEvents(false)}>Hide events</button>
+        </div>
+      )}
+
+      {!showEvents && (
+        <div>
+          <button onClick={() => setShowEvents(true)}>Show events</button>
+        </div>
+      )}
+
+      {showEvents && events.map((event, index) => (
+        <div key={event.id}>
+          <h2>{index} - {event.title}</h2>
+          <button onClick={() => deleteEvent(event.id)}>Delete event</button>
+        </div>
+      ))}
+
+      {!showModal && (
+        <div>
+          <button onClick={() => setShowModal(true)}>Show modal</button>
+        </div>
+      )}
+
+      {showModal && <Modal handleClose={handleClose}>
+        <h2>10% Off Coupon Code!!!</h2>
+        <p>Use the code NINJA10 at the checkout</p>
+      </Modal>}
     </div>
   );
 }
