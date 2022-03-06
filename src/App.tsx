@@ -3,6 +3,13 @@ import { useState } from 'react';
 import Title from './components/Title';
 import Modal from './components/Modal';
 import EventList from './components/EventList';
+import NewEventForm from './components/NewEventForm';
+
+interface Event {
+  title: string;
+  date: string;
+  id: number;
+}
 
 const App = () => {
   const [showModal, setShowModal] = useState(true);
@@ -13,6 +20,13 @@ const App = () => {
     { title: "Bowser's live stream", id: 2 },
     { title: "Race on moo moo farm", id: 3 },
   ]);
+
+  const addEvent = (event: Event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event]
+    });
+    setShowModal(false)
+  }
 
   const handleClick = () => {
     setName('Luigi');
@@ -54,16 +68,27 @@ const App = () => {
 
       {showEvents && <EventList events={events} deleteEvent={deleteEvent} />}
 
-      {!showModal && (
+      {/* {!showModal && (
         <div>
           <button onClick={() => setShowModal(true)}>Show modal</button>
         </div>
-      )}
+      )} */}
 
-      {showModal && <Modal handleClose={handleClose}>
+      {/* {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
         <h2>10% Off Coupon Code!!!</h2>
         <p>Use the code NINJA10 at the checkout</p>
+      </Modal>} */}
+
+      {!showModal && (
+        <div>
+          <button onClick={() => setShowModal(true)}>Add New Event</button>
+        </div>
+      )}
+
+      {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
+        <NewEventForm addEvent={addEvent}/>
       </Modal>}
+
     </div>
   );
 }

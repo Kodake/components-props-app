@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import styles from './EventList.module.css';
 
 interface Event {
     title: string;
@@ -14,10 +15,10 @@ const EventList = ({ events, deleteEvent }: Props) => {
     return (
         <div>
             {events.map((event, index) => (
-                <React.Fragment key={event.id}>
+                <div className={styles.card} key={event.id}>
                     <h2>{index} - {event.title}</h2>
                     <button onClick={() => deleteEvent(event.id)}>Delete event</button>
-                </React.Fragment>
+                </div>
             ))}
         </div>
     )
