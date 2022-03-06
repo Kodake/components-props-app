@@ -1,4 +1,5 @@
 .new-event-form label,
+.new-event-form select,
 .new-event-form input {
     display: block;
     text-align: left;

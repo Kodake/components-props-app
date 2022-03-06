@@ -5,9 +5,10 @@ import Modal from './components/Modal';
 import EventList from './components/EventList';
 import NewEventForm from './components/NewEventForm';
 
-interface Event {
+interface EventDance {
   title: string;
   date: string;
+  location?: string;
   id: number;
 }
 
@@ -21,7 +22,7 @@ const App = () => {
     { title: "Race on moo moo farm", id: 3 },
   ]);
 
-  const addEvent = (event: Event) => {
+  const addEvent = (event: EventDance) => {
     setEvents((prevEvents) => {
       return [...prevEvents, event]
     });
